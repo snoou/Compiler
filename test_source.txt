@@ -1,0 +1,9 @@
+public Sub Main();
+    dim x as integer;
+    read x;
+    if x >= 10 then;
+        print "Hello!";
+    else;
+        print "Bye!";
+    Endif;
+End Sub

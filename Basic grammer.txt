@@ -1,0 +1,180 @@
+!	' |\r|\n|\t'
+'dim'
+'Readonly'
+'as'
+'\,'
+'\['
+'\]'
+'char'
+'integer'
+'boolean'
+'double'
+'real'
+'Do'
+'while'
+'Loop'
+'For'
+'Next'
+'to'
+'return'
+'read'
+'print'
+'string'
+'@'
+'&'
+'#'
+'%'
+'\"'
+'{'
+'}' 
+'='
+'\('
+'\)'
+'^'
+'\*'
+'/'
+'mod'
+'\-'
+'\+'
+'\n'
+'<='
+'>='
+'<'
+'>'
+'<>'
+'if'
+'then'
+'else'
+'Endif'
+':'
+'End'
+'ID'
+'functoin'
+'Main'
+'public' 
+'Sub'
+'.'
+';'
+'Byref'
+'NUM'
+'Byval' ;
+##
+P: 'public' 'Sub' 'Main' '(' ')' ';' ST ';' 'End' 'Sub'
+												;
+ST: Stmt ZZ
+			;
+ZZ: ST
+		| ;
+Stmt: Assign
+			| OO
+			| IF
+			| Func
+			| PRINT
+			| READ
+			| EE
+			|VV
+			;
+OO: 'Do' 'while' Term Relop Term  ';' ST ';' 'Loop'
+									| 'For' X 'to' Term ';' ST ';' 'Next'
+									;
+X: 'ID' '=' Term ;
+Assign: X
+         | 'ID' '[' Term ']' '=' Term
+         | 'ID' '=' STRING 
+			;
+IF: 'if' Term Relop Term  'then' ';' ST ';' 'else' ';' ST ';' 'Endif'
+															;
+Func:'functoin' 'ID' '(' param ')' ':' 'as' Type ';' ST ';' 'return' Term ';' 'End' 'functoin'
+																				;
+EE: 'Sub' 'ID' '(' param ')' ';' ST ';' 'End' 'Sub'
+												;
+VV: 'dim' 'ID' YY
+          | 'Readonly' 'ID' CC
+		  ;
+YY: AA 
+     | '[' Term ']' BB
+	 ;
+BB: ',' 'ID' '[' Term ']' BB
+                 | 'as' Type
+				 ;
+AA: ',' 'ID' AA
+           | 'as' Type
+		   ;
+CC: ',' 'ID' CC
+          | '=' Term
+		  ;
+Term: EXP
+		|'-' EXP
+		|'+' EXP
+		;
+EXP : EXP OP1 T
+				| T
+				;
+T: T OP2 F
+			| F
+			;
+F: I '^' F
+			| I
+			;
+I : 'ID'
+		| 'NUM'
+		| '(' EXP ')'
+		;
+PRINT: 'print' PP
+				;
+PP: Term
+	| STRING
+	;
+READ: 'read' 'ID' LL
+				;
+LL:  '[' Term ']'
+				| ;
+param: 'Byval' 'ID' 'as' Type WW
+						| 'Byref' 'ID' 'as' Type WW 
+						| 
+						;
+WW: ',' param
+			| ;
+Type: 'char'
+        | 'integer'
+        | 'boolean'
+        | 'double'
+        | 'real'
+		| 'string'
+		;
+OP1: | '+'
+	| '-'
+	; 
+OP2: '*'
+		| '/'
+		;
+Relop: '<='
+		| '>='
+		| '<>'
+		| '='
+		| '>'
+		| '<'
+		;
+STRING: '"' SS '"'
+				;
+SS: 'ID' SS 
+			|'NUM' SS
+			| CHAR SS
+			| ;
+CHAR : ':'
+			| ')'
+			| '('
+			| '['
+			| ']'
+			| '*'
+			| '+'
+			| '/'
+			| '^'
+			| '@'
+			| '&'
+			| '-'
+			| '#'
+			| '%' 
+			| '{'
+			| '}' 
+			;
